@@ -1,0 +1,41 @@
+<div layout="row" layout-align="start center">
+  <div layout="row" layout-align="start center" flex>
+    <md-button id="navigation-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('navigation')" hide-gt-sm aria-label="Toggle navigation" translate translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION">
+      <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
+    </md-button>
+  </div>
+
+  <div layout="row" layout-align="start center">
+    <md-progress-circular id="toolbar-progress" ng-disabled="!$root.loadingProgress" class="md-accent mr-16" md-diameter="32"></md-progress-circular>
+
+    <div class="toolbar-separator"></div>
+
+    <md-menu-bar id="user-menu" ng-if="vm.user">
+      <md-menu md-position-mode="right bottom">
+        <md-button class="user-button" ng-click="$mdOpenMenu()" aria-label="User settings">
+          <div layout="row" layout-align="space-between center">
+            <div class="avatar-wrapper">
+              <img md-menu-align-target class="avatar" src="assets/images/avatars/profile.jpg">
+            </div>
+            <span class="username" hide show-gt-sm>{{vm.user.name}}</span>
+            <md-icon md-font-icon="icon-chevron-down" class="icon s16" hide-xs></md-icon>
+          </div>
+        </md-button>
+
+        <md-menu-content width="3">
+          <md-menu-item class="md-indent" ui-sref="app.main_account_profile">
+            <md-icon md-font-icon="icon-account" class="icon"></md-icon>
+            <md-button>Profile</md-button>
+          </md-menu-item>
+
+          <md-menu-divider></md-menu-divider>
+
+          <md-menu-item class="md-indent">
+            <md-icon md-font-icon="icon-logout" class="icon"></md-icon>
+            <md-button ng-click="vm.logout()">Logout</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </md-menu-bar>
+  </div>
+</div>

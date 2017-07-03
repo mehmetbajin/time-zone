@@ -1,0 +1,14 @@
+#app-main-admin-timezones {
+  .search {
+    margin-bottom: -2px;
+  }
+  table {
+    table-layout: fixed;
+    th,
+    td {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

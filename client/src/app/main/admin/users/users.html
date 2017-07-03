@@ -1,0 +1,92 @@
+<div class="page-layout carded fullwidth" layout="row" id="app-main-admin-users">
+
+  <!-- TOP BG -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BG -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- HEADER -->
+    <div class="header" layout="column" layout-align="start start">
+      <div class="breadcrumb" layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Admin</span>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Users</span>
+      </div>
+      <md-button class="md-fab md-primary md-fab-top-right" ng-click="vm.edit($event, null)" aria-label="New user">
+        <md-tooltip>New User</md-tooltip>
+        <md-icon md-font-icon="icon-account-plus"></md-icon>
+      </md-button>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content-card" layout="column" flex>
+
+      <div class="toolbar" layout="row" layout-align="center center">
+        <span class="md-title">Users</span>
+        <span flex></span>
+        <div layout="row" class="mt-16 mr-16 search" hide-xs ng-if="vm.users.length > 0">
+          <md-input-container md-no-float>
+            <input type="text" name="name" ng-model="vm.filters.name" placeholder="Search by name...">
+          </md-input-container>
+        </div>
+        <div layout="row" class="mt-16 mr-8" hide-xs>
+          <md-checkbox ng-repeat="role in [99, 20, 10]" ng-model="vm.filters.role[role]">{{::role | tzRole}}</md-checkbox>
+        </div>
+      </div>
+
+      <md-content class="content" flex>
+
+        <!-- <pre>{{vm.users|json}}</pre> -->
+
+        <div ng-if="vm.users.length === 0">
+          There are no users yet. Tap the plus button to add a user.
+        </div>
+
+        <div ng-if="vm.users.length > 0 && vm.filtered().length === 0">
+          There are no users matching current filters.
+        </div>
+
+        <div class="simple-table-container md-whiteframe-4dp" ng-if="vm.users.length > 0 && vm.filtered().length > 0">
+          <table class="simple clickable" ms-responsive-table>
+            <thead>
+              <tr>
+                <th class="role">Role</th>
+                <th class="name">Name</th>
+                <th class="email">Email</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td></td>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr ng-repeat="user in vm.users | orderBy:['-role', '+name'] | filter:vm.filter track by user._id" ng-click="vm.edit($event, user)">
+                <td class="role">
+                  <span ng-class="{'md-green-700-bg':user.role === 10,
+                                   'md-blue-700-bg': user.role === 20,
+                                   'md-red-800-bg':  user.role === 99}">
+                    {{user.role | tzRole}}
+                  </span>
+                </td>
+                <td class="name">{{user.name}}</td>
+                <td class="email">{{user.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </md-content>
+
+    </div>
+    <!-- / CONTENT -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

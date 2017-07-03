@@ -1,0 +1,45 @@
+<div id="profile" class="page-layout simple tabbed">
+
+  <!-- HEADER -->
+  <div class="header md-accent-bg" layout="row" layout-align="space-between end">
+    <div class="user-info" layout="row" layout-align="start center">
+      <img class="profile-image avatar big" src="assets/images/avatars/profile.jpg" alt="{{vm.user.name}}">
+      <div class="name text-truncate">{{vm.user.name}}</div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" flex>
+    <md-tabs md-dynamic-height>
+      <md-tab>
+        <md-tab-label>
+          <span>About</span>
+        </md-tab-label>
+        <md-tab-body>
+          <div layout="row" layout-wrap>
+            <div layout="column" flex="100">
+              <div class="profile-box info-box general md-whiteframe-1dp" layout="column">
+                <header class="md-primary-bg">
+                  <div class="title">General</div>
+                </header>
+                <div class="content">
+                  <div class="info-line">
+                    <div class="title">Email</div>
+                    <div class="info">{{::vm.user.email}}</div>
+                  </div>
+                  <div class="info-line">
+                    <div class="title">Role</div>
+                    <div class="info">{{::vm.user.role | tzRole}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+  </div>
+  <!-- / CONTENT -->
+
+</div>

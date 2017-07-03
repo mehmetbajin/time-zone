@@ -1,0 +1,120 @@
+
+functions:
+  - userExists(id):    root.users[id].exists()
+  - codeExists(id):    root.codes[id].exists()
+  - cityExists(id):    root.cities[id].exists()
+  - isUser(id):        userExists(id) && root.users[id].role == 10
+  - isManager(id):     userExists(id) && root.users[id].role == 20
+  - isAdmin(id):       userExists(id) && root.users[id].role == 99
+  - isLoggedIn():      auth.uid != null
+  - isCurrentUser(id): auth.uid == id
+  - createOnly():      next.exists() && !prev.exists()
+  - updateOnly():      next.exists() &&  prev.exists()
+  - deleteOnly():      prev.exists() && !next.exists()
+  - createOrUpdate():  createOnly() || updateOnly()
+  - updateOrDelete():  updateOnly() || deleteOnly()
+  - ownerOf(id):       root.timezones[id].owner
+  - isValidRole(role): role == 10 || role == 20 || role == 99
+
+schema:
+  type: object
+  additionalProperties: false
+  properties:
+
+    users:
+      type: object
+      indexOn: [email]
+      $userId:
+        type: object
+        additionalProperties: false
+        required: [name, email, role]
+        properties:
+          name:  {type: string}
+          email: {type: string}
+          role:
+            type: number
+            constraint: (createOnly() && isValidRole(next)) ||
+                        (
+                          updateOnly() &&
+                          (
+                            (isAdmin(auth.uid) && isValidRole(next)) ||
+                            (isManager(auth.uid) && ((isCurrentUser($userId) && next <= prev) || (!isCurrentUser($userId) && isValidRole(next)))) ||
+                            (isUser(auth.uid) && next == 10)
+                          )
+                        ) ||
+                        (deleteOnly())
+
+    timezones:
+      type: object
+      indexOn: [owner]
+      $timezoneId:
+        type: object
+        additionalProperties: false
+        required: [code, city, owner]
+        properties:
+          code:  {type: string, constraint: next == null || codeExists(next)}
+          city:  {type: string, constraint: next == null || cityExists(next)}
+          owner: {type: string, constraint: next == null || userExists(next)}
+
+    codes:
+      type: object
+      $codeId:
+        type: object
+        additionalProperties: false
+        required: [name, offset]
+        properties:
+          name:   {type: string}
+          offset: {type: string}
+
+    cities:
+      type: object
+      $cityId:
+        type: object
+        additionalProperties: false
+        required: [name, code]
+        properties:
+          name: {type: string}
+          code: {type: string, constraint: codeExists(next)}
+
+access:
+  - location: /
+    read:     false
+    write:    false
+
+  - location: /cities
+    read:     true
+    write:    false
+
+  - location: /cities/$cityId
+    read:     true
+    write:    false
+
+  - location: /codes
+    read:     true
+    write:    false
+
+  - location: /codes/$codeId
+    read:     true
+    write:    false
+
+  - location: /users
+    read:     isAdmin(auth.uid) || isManager(auth.uid)
+    write:    false
+
+  - location: /users/$userId
+    read:     isAdmin(auth.uid) || isManager(auth.uid) || isCurrentUser($userId)
+    write:    (createOrUpdate() && isAdmin(auth.uid)) ||
+              (createOrUpdate() && isManager(auth.uid)) ||
+              (createOrUpdate() && isCurrentUser($userId)) ||
+              (deleteOnly() && isAdmin(auth.uid) && auth.uid != $userId) ||
+              (deleteOnly() && isManager(auth.uid) && auth.uid != $userId)
+
+  - location: /timezones
+    read:     isAdmin(auth.uid)
+    write:    false
+
+  - location: /timezones/$timezoneId
+    read:     (isAdmin(auth.uid)) || (ownerOf($timezoneId) == auth.uid)
+    write:    (isAdmin(auth.uid)) ||
+              (createOrUpdate() && isCurrentUser(next.owner)) ||
+              (deleteOnly() && isCurrentUser(prev.owner))

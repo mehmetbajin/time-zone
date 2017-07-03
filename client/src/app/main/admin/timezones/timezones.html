@@ -1,0 +1,85 @@
+<div class="page-layout carded fullwidth" layout="row" id="app-main-admin-timezones">
+
+  <!-- TOP BG -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BG -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- HEADER -->
+    <div class="header" layout="column" layout-align="start start">
+      <div class="breadcrumb" layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Admin</span>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Timezones</span>
+      </div>
+      <md-button class="md-fab md-primary md-fab-top-right" ng-click="vm.edit($event, null)" aria-label="New timezone">
+        <md-tooltip>New Timezone</md-tooltip>
+        <md-icon md-font-icon="icon-plus"></md-icon>
+      </md-button>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content-card" layout="column" flex>
+
+      <div class="toolbar" layout="row" layout-align="center center">
+        <span class="md-title">Timezones</span>
+        <span flex></span>
+        <div layout="row" class="mt-16 mr-8 search" hide-xs ng-if="vm.timezones.length > 0">
+          <md-input-container md-no-float>
+            <input type="text" name="name" ng-model="vm.filters.name" placeholder="Search by name...">
+          </md-input-container>
+        </div>
+      </div>
+
+      <md-content class="content" flex>
+
+        <!-- <pre>{{vm.timezones|json}}</pre> -->
+
+        <div ng-if="vm.timezones.length === 0">
+          There are no timezones yet. Tap the plus button to add a timezone.
+        </div>
+
+        <div ng-if="vm.timezones.length > 0 && vm.filtered().length === 0">
+          There are no timezones matching current filters.
+        </div>
+
+        <div class="simple-table-container md-whiteframe-4dp" ng-if="vm.timezones.length > 0 && vm.filtered().length > 0">
+          <table class="simple clickable" ms-responsive-table>
+            <thead>
+              <tr>
+                <th class="name">Name</th>
+                <th class="city">City</th>
+                <th class="time">Current Time</th>
+                <th class="owner" permission permission-only="'ADMIN'">Owner</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td></td>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr ng-repeat="tz in vm.timezones | orderBy:vm.offsetNumber | filter:vm.filter track by tz._id" ng-click="vm.edit($event, tz)">
+                <td class="name">{{vm.formatName(tz)}}</td>
+                <td class="city">{{vm.formatCity(tz)}}</td>
+                <td class="time">{{vm.formatMoment(tz) | amDateFormat:'MM/DD/YYYY HH:mm:ss'}}</td>
+                <td class="owner" permission permission-only="'ADMIN'">{{vm.formatOwner(tz)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </md-content>
+
+    </div>
+    <!-- / CONTENT -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

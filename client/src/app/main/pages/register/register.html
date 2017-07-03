@@ -1,0 +1,53 @@
+<div id="register" layout="row" layout-align="start">
+  <div id="register-intro" flex hide show-gt-sm>
+    <div class="logo md-accent-bg">
+      <span>T</span>
+    </div>
+    <div class="title">Timezones</div>
+    <div class="description">Track your favorite timezones.</div>
+  </div>
+
+  <div id="register-form-wrapper" class="flex-scrollable md-whiteframe-8dp" layout="column" flex ms-scroll>
+    <div id="register-form">
+      <div class="logo md-accent-bg" hide-gt-sm>
+        <span>T</span>
+      </div>
+
+      <div class="title">Register</div>
+      <div class="description">Get started for free today.</div>
+
+      <form name="vm.f" novalidate>
+        <md-input-container class="md-block" md-no-float>
+          <input type="text" name="name" placeholder="Name" ng-model="vm.user.name" ng-disabled="vm.working" required>
+          <div ng-messages="vm.f.name.$error">
+            <div ng-message="required">Please enter your name.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" md-no-float>
+          <input type="email" name="email" placeholder="Email" ng-model="vm.user.email" ng-disabled="vm.working" required>
+          <div ng-messages="vm.f.email.$error">
+            <div ng-message="required">Please enter your email.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block" md-no-float>
+          <input type="password" name="password" placeholder="Password" ng-model="vm.user.password" ng-minlength="8" ng-disabled="vm.working" required>
+          <div ng-messages="vm.f.password.$error">
+            <div ng-message="required">Please enter your password.</div>
+            <div ng-message="minlength">Must be at least 8 characters.</div>
+          </div>
+        </md-input-container>
+
+        <md-button type="submit" class="md-raised md-accent submit-button" ng-click="vm.register(vm.user)" ng-disabled="vm.f.$invalid || vm.f.$pristine || vm.working">
+          {{vm.working ? 'Registering...' : 'Register'}}
+        </md-button>
+      </form>
+
+      <div class="login" layout="row" layout-sm="column" layout-align="center center">
+        <span class="text">Already have an account?</span>
+        <a class="link" ui-sref="app.main_pages_login(vm.user)">Login</a>
+      </div>
+    </div>
+  </div>
+</div>

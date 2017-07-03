@@ -1,0 +1,71 @@
+<md-dialog aria-label="User" flex="90" flex-gt-xs="70" flex-gt-sm="50" flex-gt-md="30">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="md-title" ng-if="vm.editing !== true">New User</h2>
+      <h2 class="md-title" ng-if="vm.editing === true">Update User</h2>
+    </div>
+  </md-toolbar>
+
+  <md-divider></md-divider>
+
+  <md-dialog-content class="md-dialog-content">
+    <form name="vm.f" novalidate layout="column">
+
+      <!-- ROLE -->
+      <md-input-container class="md-block">
+        <label>Role</label>
+        <md-select name="role" ng-model="vm.user.role" required>
+          <md-option ng-value="role" ng-repeat="role in [10, 20, 99] track by $index">
+            {{role | tzRole}}
+          </md-option>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+        <div ng-messages="vm.f.role.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <!-- / ROLE -->
+
+      <!-- NAME -->
+      <md-input-container class="md-block">
+        <label>Name</label>
+        <input type="text" name="name" ng-model="vm.user.name" required>
+        <div ng-messages="vm.f.name.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <!-- / NAME -->
+
+      <!-- EMAIL -->
+      <md-input-container class="md-block">
+        <label>Email</label>
+        <input type="email" name="email" ng-model="vm.user.email" required ng-disabled="vm.editing">
+        <div ng-messages="vm.f.email.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <!-- / EMAIL -->
+
+      <!-- PASSWORD -->
+      <md-input-container class="md-block" ng-if="!vm.editing">
+        <label>Password</label>
+        <input type="password" name="password" ng-model="vm.user.password" ng-minlength="8" required>
+        <div ng-messages="vm.f.password.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="minlength">Must be at least 8 characters.</div>
+        </div>
+      </md-input-container>
+      <!-- / PASSWORD -->
+
+    </form>
+  </md-dialog-content>
+
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="vm.cancel()">Cancel</md-button>
+    <md-button ng-click="vm.remove()" class="md-warn" ng-if="vm.editing">Remove</md-button>
+    <md-button ng-click="vm.ok()" class="md-primary" ng-disabled="vm.f.$invalid || vm.f.$pristine">OK</md-button>
+  </md-dialog-actions>
+
+</md-dialog>

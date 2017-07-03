@@ -1,0 +1,16 @@
+
+.DS_Store
+
+node_modules/
+bower_components/
+.sass-cache/
+.idea/
+.tmp/
+dist/
+coverage/
+
+# Credentials would be omitted, but I'm including in this case to allow running
+# the app directly from the repo.
+# firebase-key.json
+
+rules.json

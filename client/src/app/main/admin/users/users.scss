@@ -1,0 +1,20 @@
+#app-main-admin-users {
+  .search {
+    margin-bottom: -2px;
+  }
+  table {
+    table-layout: fixed;
+    th,
+    td {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      &.role {
+        span {
+          padding: 2px 4px;
+          border-radius: 2px;
+        }
+      }
+    }
+  }
+}

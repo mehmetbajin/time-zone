@@ -1,0 +1,66 @@
+#profile {
+  .header {
+    height: 200px;
+    min-height: 200px;
+    max-height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("/assets/images/backgrounds/header-bg.png");
+    .profile-image {
+      margin-right: 24px;
+    }
+    .name {
+      font-size: 34px;
+    }
+    .actions {
+      .md-button {
+        text-transform: none;
+        padding: 0 16px;
+        height: 32px;
+        line-height: 32px;
+        margin: 0 0 0 8px;
+      }
+    }
+  }
+  .content {
+    md-content {
+      background-color: transparent;
+    }
+  }
+  .profile-box {
+    margin-bottom: 16px;
+    header {
+      padding: 16px;
+      .title {
+        font-size: 17px;
+      }
+      .more {
+        cursor: pointer;
+      }
+    }
+    .content {
+      padding: 16px;
+      background-color: #FFF;
+    }
+    footer {
+      padding: 8px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+    &.info-box {
+      .info-line {
+        margin-bottom: 24px;
+        .title {
+          font-size: 15px;
+          font-weight: 500;
+          padding-bottom: 4px;
+        }
+        .info {}
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

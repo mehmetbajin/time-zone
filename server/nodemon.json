@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "ignore": [
+    "app/**/*.spec.js",
+    "*.yaml",
+    "*.json"
+  ]
+}

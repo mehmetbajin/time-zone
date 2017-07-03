@@ -1,0 +1,47 @@
+{
+  "name": "time-zone",
+  "version": "1.0.0",
+  "description": "Time zone app server.",
+  "main": "server.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "gulp serve"
+  },
+  "author": "Mehmet Bajin <bajin.mehmet@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "firebase": "^3.6.0",
+    "firebase-admin": "^4.0.0",
+    "lodash": "^4.16.6",
+    "morgan": "^1.7.0",
+    "parameters-middleware": "^0.1.0",
+    "q": "^1.4.1",
+    "request": "^2.76.0",
+    "request-promise": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "csv-parse": "^1.1.7",
+    "fs-promise": "^0.5.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-exit": "0.0.2",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-jshint": "^2.0.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-nodemon": "^2.2.1",
+    "jshint": "^2.9.3",
+    "jshint-stylish": "^2.2.1",
+    "karma": "^1.2.0",
+    "karma-mocha": "^1.1.1",
+    "mocha": "^3.0.2",
+    "really-need": "^1.9.2",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
+    "supertest": "^2.0.1"
+  }
+}

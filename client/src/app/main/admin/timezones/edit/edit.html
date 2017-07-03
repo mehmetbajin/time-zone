@@ -1,0 +1,70 @@
+<md-dialog aria-label="Timezone" flex="90" flex-gt-xs="70" flex-gt-sm="50" flex-gt-md="30">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="md-title" ng-if="::vm.editing !== true">New Timezone</h2>
+      <h2 class="md-title" ng-if="::vm.editing === true">Update Timezone</h2>
+    </div>
+  </md-toolbar>
+
+  <md-divider></md-divider>
+
+  <md-dialog-content class="md-dialog-content">
+    <form name="vm.f" novalidate layout="column">
+
+      <!-- CODE -->
+      <md-input-container class="md-block">
+        <label>Code/Zone</label>
+        <md-select name="code" ng-model="vm.timezone.code" ng-change="vm.codeChanged()" required>
+          <md-option ng-value="code._id" ng-repeat="code in ::vm.codes | orderBy:['+name'] track by code._id">
+            {{::code | tzCodeName}}
+          </md-option>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+        <div ng-messages="vm.f.code.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <!-- / CODE -->
+
+      <!-- CITY -->
+      <md-input-container class="md-block">
+        <label>City</label>
+        <md-select name="city" ng-model="vm.timezone.city" ng-disabled="!vm.timezone.code" required>
+          <md-option ng-value="city._id" ng-repeat="city in vm.citiesOf(vm.timezone.code) | orderBy:['+name'] track by city._id">
+            {{::city.name}}
+          </md-option>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+        <div ng-messages="vm.f.city.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <!-- / CITY -->
+
+      <!-- OWNER -->
+      <md-input-container class="md-block" ng-if="::vm.admin()">
+        <label>Owner</label>
+        <md-select name="owner" ng-model="vm.timezone.owner" required>
+          <md-option ng-value="user._id" ng-repeat="user in ::vm.users | orderBy:['+name'] track by user._id">
+            {{::user.name}}
+          </md-option>
+        </md-select>
+        <div class="md-errors-spacer"></div>
+        <div ng-messages="vm.f.owner.$error">
+          <div ng-message="required">This is required.</div>
+        </div>
+      </md-input-container>
+      <!-- / OWNER -->
+
+    </form>
+  </md-dialog-content>
+
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="vm.cancel()">Cancel</md-button>
+    <md-button ng-click="vm.remove()" class="md-warn" ng-if="vm.editing">Remove</md-button>
+    <md-button ng-click="vm.ok()" class="md-primary" ng-disabled="vm.f.$invalid || vm.f.$pristine">OK</md-button>
+  </md-dialog-actions>
+
+</md-dialog>
