@@ -58,7 +58,7 @@ function createByManager(req, res) {
       id: authUser.uid
     })))
     .catch(error => res.status(401).json(util.formatError(error)))
-    .finally(firebase.auth().signOut);
+    .finally(() => firebase.auth().signOut());
 }
 
 /**
@@ -92,7 +92,7 @@ function createByUser(req, res) {
       token: token
     })))
     .catch(error => res.status(401).json(util.formatError(error)))
-    .finally(firebase.auth().signOut);
+    .finally(() => firebase.auth().signOut());
 }
 
 /**
