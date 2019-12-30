@@ -1,6 +1,8 @@
 
 # Time Zone
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mehmetbajin/timezone.svg)](https://greenkeeper.io/)
+
 This app allows users to manage their favorite time zone records.
 
 # Getting Started
